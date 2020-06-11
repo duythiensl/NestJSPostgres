@@ -1,6 +1,7 @@
+import { CreateCompanyDto } from './dto/create-company.dto';
 import { Company } from './company.entity';
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, Connection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -9,6 +10,14 @@ export class CompaniesService {
     @InjectRepository(Company)
     private companiesRepository: Repository<Company>,
   ) {}
+  create(createCompanyDto: CreateCompanyDto): Promise<Company> {
+    const company = new Company();
+    company.name = createCompanyDto.name;
+    company.domain = createCompanyDto.domain;
+    company.description = createCompanyDto.description;
+
+    return this.companiesRepository.save(company);
+  }
 
   findAll(): Promise<Company[]> {
     return this.companiesRepository.find();

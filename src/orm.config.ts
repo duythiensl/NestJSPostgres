@@ -9,4 +9,5 @@ export const config: TypeOrmModuleOptions = {
   database: 'fullstack_db',
   synchronize: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
+  autoLoadEntities: true,
 };
